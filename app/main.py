@@ -1,6 +1,16 @@
 #Import FastAPI for creating the backend and BaseModel for request validation
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
+from dotenv import load_dotenv
+from openai import OpenAI
+
+# Load variables from .env
+load_dotenv()
+
+# Get the API key
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key)
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -9,7 +19,7 @@ app = FastAPI()
 class TextInput(BaseModel):
     text: str # The text the user wants to summarize
 
-# Root endpoint to test if the API is running
+# Simple root endpoint to test if the API is running
 @app.get("/")
 def read_root():
     return {"message": "Hello, world!"}
@@ -18,10 +28,21 @@ def read_root():
 @app.post("/summarize")
 def summarize(input: TextInput):
     """
-    Accepts a POST request with JSON containing 'text'.
-    Returns a dummy summary (first 100 characters or full text if shorter).
+    Summarize text using OpenAI.
     """
-    # Truncate text to 100 characters as a placeholder summarization
-    summary = input.text[:100] + "..." if len(input.text) > 100 else input.text
-    # Return the summary as JSON
+    try:
+        # Modern API call
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant that summarizes text."},
+                {"role": "user", "content": input.text}
+            ],
+            temperature=0.5,
+            max_tokens=150
+        )
+        summary = response.choices[0].message.content.strip()
+    except Exception as e:
+        summary = f"Error: {e}"
+
     return {"summary": summary}
