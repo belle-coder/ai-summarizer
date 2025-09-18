@@ -1,7 +1,7 @@
 **AI Text Summarizer**
 
 A simple FastAPI app that summarizes text using OpenAI's GPT-3.5-turbo.
-This project demonstrates a working API, automated tests, and a CI workflow — perfect for showcasing on GitHub.
+This project demonstrates a working API, automated tests, and a CI workflow.
 
 **Features**
 
