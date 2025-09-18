@@ -1,17 +1,19 @@
 **AI Text Summarizer**
 
 A simple FastAPI app that summarizes text using OpenAI's GPT-3.5-turbo.
-This project demonstrates a working API, automated tests, and a CI workflow — perfect for showcasing on GitHub.
+This project demonstrates a working API, a Python-based frontend using Streamlit, automated tests, and a CI workflow.
 
 **Features**
 
-/summarize endpoint to generate AI-powered summaries of any text
+- /summarize endpoint to generate AI-powered summaries of any text
 
-Automated tests using mocked OpenAI responses (runs without an API key)
+- Streamlit frontend for interactive use
 
-Continuous Integration with GitHub Actions
+- Automated tests using mocked OpenAI responses (runs without an API key)
 
-Clean project structure and easy setup
+- Continuous Integration with GitHub Actions
+
+- Clean project structure and easy setup
 
 Setup & Run
 
@@ -55,11 +57,14 @@ Note: Tests run without an API key thanks to mocking.
 ``````
 uvicorn app.main:app --reload
 ``````
+**6 Run the Streamlit frontend (in a separate terminal)***
+```
+streamlit run app/frontend.py
+```
 
-
-**6 Access the API**
-
-Open your browser or use curl:
+**7 Use the app**
+- Type text in the Streamlit app and click **Summarize**
+- Or test the API directly
 ``````
 curl -X POST "http://127.0.0.1:8000/summarize" \
      -H "Content-Type: application/json" \
@@ -72,9 +77,8 @@ Run all tests with:
 pytest -v
 ``````
 
-Mocked tests ensure that you don’t need an OpenAI API key.
-
-Confirms both the root endpoint and /summarize work as expected.
+- Mocked tests ensure that you don’t need an OpenAI API key.
+- Confirms both the root endpoint and /summarize work as expected.
 
 **Project Structure**
 ```text
@@ -92,9 +96,9 @@ ai-summarizer/
 
 **Notes**
 
-All tests and CI are fully functional without an OpenAI API key.
+- All tests and CI are fully functional without an OpenAI API key.
 
-For production use, ensure your OPENAI_API_KEY is stored securely (environment variables or secret management).
+- For production use, ensure your OPENAI_API_KEY is stored securely (environment variables or secret management).
 
 **License**
 
